@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plot
 
 def createMap():
-    list = scraper.scrapeQuery("Wordle 262", 100)
+    list = scraper.scrapeQuery("Wordle 261", 100)
     mean = 0
     length = 0
     
@@ -30,16 +30,17 @@ map, mean = createMap()
 
 print("Mean value: " + str(mean))   
 
-mean = round(mean)
+roundedMean = round(mean)
 
 keys = map.keys()
 values = map.values()
 
 barlist = plot.bar(keys, values)
-barlist[mean - 1].set_color('y')
+barlist[roundedMean - 1].set_color('y')
 
 
 plot.ylabel("Number of users")
+plot.xlabel("Average: " + str(mean))
 plot.title("Wordle guesses Wordle #262")
 
 plot.show()
