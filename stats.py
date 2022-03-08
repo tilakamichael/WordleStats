@@ -1,6 +1,6 @@
 import scraper
 import numpy as np
-import matplotlib
+import matplotlib.pyplot as plot
 
 def createMap():
     list = scraper.scrapeQuery("Wordle 262", 100)
@@ -18,6 +18,14 @@ def createMap():
                 map[location] = map.get(location, 0) + 1
     
     return map
+
     
 map = createMap()
-print(map)
+
+keys = map.keys()
+values = map.values()
+
+plot.bar(keys, values)
+plot.ylabel("Number of users")
+plot.title("Wordle guesses Wordle #262")
+plot.show()
