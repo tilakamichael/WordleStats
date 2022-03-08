@@ -4,7 +4,7 @@ import matplotlib.pyplot as plot
 
 def createMap():
     list = scraper.scrapeQuery("Wordle 262", 100)
-    average = 0
+    mean = 0
     length = 0
     
     map = { "1" : 0,
@@ -21,10 +21,10 @@ def createMap():
                 map[location] = map.get(location, 0) + 1
             
             if (i[i.index("/6") - 1] != "X"):
-                average += int(i[i.index("/6") - 1])                
+                mean += int(i[i.index("/6") - 1])                
                 length = length + 1
     
-    return map, round((average / float(length)), 1)
+    return map, round((mean / float(length)), 1)
     
 map, mean = createMap()
 
