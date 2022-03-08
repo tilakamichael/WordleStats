@@ -28,10 +28,15 @@ def createMap():
     
 map, mean = createMap()
 
+mean = round(mean)
+
 keys = map.keys()
 values = map.values()
 
-plot.bar(keys, values)
+barlist = plot.bar(keys, values)
+barlist[mean - 1].set_color('y')
+
+
 plot.ylabel("Number of users")
 plot.title("Wordle guesses Wordle #262")
 
