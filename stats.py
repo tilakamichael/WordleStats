@@ -26,7 +26,7 @@ def createMap():
     
     return map, round((average / float(length)), 1)
     
-map, average = createMap()
+map, mean = createMap()
 
 keys = map.keys()
 values = map.values()
@@ -35,5 +35,5 @@ plot.bar(keys, values)
 plot.ylabel("Number of users")
 plot.title("Wordle guesses Wordle #262")
 
-print(average)
+print("Mean value: " + str(mean))
 plot.show()
