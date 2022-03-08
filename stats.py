@@ -20,7 +20,7 @@ def createMap():
             if(location in map):
                 map[location] = map.get(location, 0) + 1
             
-            if (i[i.index("/6") - 1] is not "X"):
+            if (i[i.index("/6") - 1] != "X"):
                 average += int(i[i.index("/6") - 1])                
                 length = length + 1
     
