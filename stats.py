@@ -1,7 +1,7 @@
 from tracemalloc import start
 import scraper
 import matplotlib.pyplot as plot
-import datetime
+from datetime import datetime 
 
 def createMap():
     list = scraper.scrapeQuery(todayWordle(), 100)
