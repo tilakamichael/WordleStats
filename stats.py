@@ -4,10 +4,12 @@ import matplotlib.pyplot as plot
 from datetime import datetime 
 
 def createMap():
+    #Collect tweets
     list = scraper.scrapeQuery(todayWordle(), 100)
     mean = 0
     length = 0
     
+    #Set up dictionary for results and number of users per result
     map = { "1" : 0,
             "2" : 0,
             "3" : 0,
@@ -15,22 +17,29 @@ def createMap():
             "5" : 0,
             "6" : 0,
             "X" : 0}
+    
+    #Iterate through the list
     for i in list:
+        #If it contains a Wordle result and it is a valid result, increment the map value
         if ("/6" in i):
             location = i[i.index("/6") - 1]
             if(location in map):
                 map[location] = map.get(location, 0) + 1
             
+            #Calculate running mean for all successful guesses 
             if (i[i.index("/6") - 1] != "X"):
                 mean += int(i[i.index("/6") - 1])                
                 length = length + 1
     
+    #Return the dictionary and the mean rounded to one decimal place
     return map, round((mean / float(length)), 1)
 
 def todayWordle():
+    #Set up today and start date
     today = datetime.today().strftime("%Y-%m-%d")
     startDate = "2022-03-08"
     
+    #Bases what the wordle number is on the difference between current date,  and march 8th (262, when I started)
     difference = datetime.strptime(today, "%Y-%m-%d") - datetime.strptime(startDate, "%Y-%m-%d")
     
     return "Wordle " + str(262 + abs(difference.days))
@@ -41,18 +50,20 @@ def main():
 
     print("Mean value: " + str(mean))   
 
+    #Rounds to nearest integer
     roundedMean = round(mean)
 
     keys = map.keys()
     values = map.values()
 
+    #Keys (results) on x, values (users) on y
     barlist = plot.bar(keys, values)
     barlist[roundedMean - 1].set_color('y')
 
-
+    #Sets up bar graph labels
     plot.ylabel("Number of users")
     plot.xlabel("Average: " + str(mean))
-    plot.title("Wordle guesses for " + todayWordle())
+    plot.title("Wordle guesses for " + todayWordle() + " per 100 users")
 
     plot.show()
 

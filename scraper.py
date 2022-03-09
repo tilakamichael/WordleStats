@@ -9,15 +9,17 @@ def getClient():
                            access_token=config.access_token,
                            access_token_secret=config.access_token_secret)
     
+    print ("Using Tweepy version " + tweepy.__version__)
     return client
 
 def scrapeQuery(query, count):
     client = getClient()
     
     #Searches recent tweets based off of parameters in tsa.py and extracts data
+    textList = []
+    
     tweets = client.search_recent_tweets(query=query, max_results=count)
     tweetData = tweets.data
-    textList = []
     
     #If the Tweet data exists then it adds all the data received to the list for analysis
     if not tweetData is None and len(tweetData) > 0:
