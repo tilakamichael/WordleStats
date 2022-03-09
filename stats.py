@@ -1,9 +1,11 @@
+from tracemalloc import start
 import scraper
 import numpy as np
 import matplotlib.pyplot as plot
+from datetime import date, datetime
 
 def createMap():
-    list = scraper.scrapeQuery("Wordle 261", 100)
+    list = scraper.scrapeQuery(todayWordle(), 100)
     mean = 0
     length = 0
     
@@ -25,22 +27,34 @@ def createMap():
                 length = length + 1
     
     return map, round((mean / float(length)), 1)
+
+def todayWordle():
+    today = datetime.today().strftime("%Y-%m-%d")
+    startDate = "2022-03-08"
     
-map, mean = createMap()
-
-print("Mean value: " + str(mean))   
-
-roundedMean = round(mean)
-
-keys = map.keys()
-values = map.values()
-
-barlist = plot.bar(keys, values)
-barlist[roundedMean - 1].set_color('y')
+    difference = datetime.strptime(today, "%Y-%m-%d") - datetime.strptime(startDate, "%Y-%m-%d")
+    
+    return "Wordle " + str(262 + abs(difference.days))
 
 
-plot.ylabel("Number of users")
-plot.xlabel("Average: " + str(mean))
-plot.title("Wordle guesses Wordle #262")
+def main():
+    map, mean = createMap()
 
-plot.show()
+    print("Mean value: " + str(mean))   
+
+    roundedMean = round(mean)
+
+    keys = map.keys()
+    values = map.values()
+
+    barlist = plot.bar(keys, values)
+    barlist[roundedMean - 1].set_color('y')
+
+
+    plot.ylabel("Number of users")
+    plot.xlabel("Average: " + str(mean))
+    plot.title("Wordle guesses for " + todayWordle())
+
+    plot.show()
+
+main()
