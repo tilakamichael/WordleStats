@@ -7,7 +7,7 @@ def createMap():
     #Collect tweets
     list = scraper.scrapeQuery(todayWordle())
     mean = 0
-    length = 0
+    numlength = 0
     
     #Set up dictionary for results and number of users per result
     map = { "1" : 0,
@@ -23,16 +23,17 @@ def createMap():
         #If it contains a Wordle result and it is a valid result, increment the map value
         if ("/6" in i):
             location = i[i.index("/6") - 1]
+            
             if(location in map):
                 map[location] = map.get(location, 0) + 1
             
             #Calculate running mean for all successful guesses 
-            if ((i[i.index("/6") - 1]).upper() != "X"):
+            if (ord(i[i.index("/6") - 1]) >= 49 and ord(i[i.index("/6") - 1]) <= 54):
                 mean += int(i[i.index("/6") - 1])                
-                length = length + 1
+                numlength = numlength + 1
     
     #Return the dictionary and the mean rounded to one decimal place
-    return map, round((mean / float(length)), 1)
+    return map, round((mean / float(numlength)), 1), len(list)
 
 def todayWordle():
     #Set up today and start date
@@ -46,7 +47,7 @@ def todayWordle():
 
 
 def main():
-    map, mean = createMap()
+    map, mean, length = createMap()
 
     print("Mean value: " + str(mean))   
 
@@ -63,7 +64,7 @@ def main():
     #Sets up bar graph labels
     plot.ylabel("Number of users")
     plot.xlabel("Average: " + str(mean))
-    plot.title("Wordle guesses for " + todayWordle() + " per 5000 users")
+    plot.title("Wordle guesses for " + todayWordle() + " per " + str(length) + " users")
 
     plot.show()
 
