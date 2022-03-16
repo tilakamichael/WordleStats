@@ -17,7 +17,7 @@ def scrapeQuery(query):
         
     tweetList = []
 
-    # Replace the limit=1000 with the maximum number of Tweets you want
+    #Goes through multiple pages and pulls tweets from each of those pages
     for tweet in tweepy.Paginator(client.search_recent_tweets, query=query, max_results=100).flatten(limit=5000):
         tweetList.append(tweet.text)
     
