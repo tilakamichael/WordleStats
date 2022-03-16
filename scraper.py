@@ -12,18 +12,13 @@ def getClient():
     print ("Using Tweepy version " + tweepy.__version__)
     return client
 
-def scrapeQuery(query, count):
+def scrapeQuery(query):
     client = getClient()
+        
+    tweetList = []
+
+    # Replace the limit=1000 with the maximum number of Tweets you want
+    for tweet in tweepy.Paginator(client.search_recent_tweets, query=query, max_results=100).flatten(limit=5000):
+        tweetList.append(tweet.text)
     
-    #Searches recent tweets based off of parameters in tsa.py and extracts data
-    textList = []
-    
-    tweets = client.search_recent_tweets(query=query, max_results=count)
-    tweetData = tweets.data
-    
-    #If the Tweet data exists then it adds all the data received to the list for analysis
-    if not tweetData is None and len(tweetData) > 0:
-        for tweet in tweetData:
-            textList.append(tweet.text)
-            
-    return textList
+    return tweetList

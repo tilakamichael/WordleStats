@@ -5,7 +5,7 @@ from datetime import datetime
 
 def createMap():
     #Collect tweets
-    list = scraper.scrapeQuery(todayWordle(), 100)
+    list = scraper.scrapeQuery(todayWordle())
     mean = 0
     length = 0
     
@@ -27,7 +27,7 @@ def createMap():
                 map[location] = map.get(location, 0) + 1
             
             #Calculate running mean for all successful guesses 
-            if (i[i.index("/6") - 1] != "X"):
+            if ((i[i.index("/6") - 1]).upper() != "X"):
                 mean += int(i[i.index("/6") - 1])                
                 length = length + 1
     
@@ -63,7 +63,7 @@ def main():
     #Sets up bar graph labels
     plot.ylabel("Number of users")
     plot.xlabel("Average: " + str(mean))
-    plot.title("Wordle guesses for " + todayWordle() + " per 100 users")
+    plot.title("Wordle guesses for " + todayWordle() + " per 5000 users")
 
     plot.show()
 
