@@ -1,4 +1,3 @@
-from tracemalloc import start
 import scraper
 import matplotlib.pyplot as plot
 from datetime import datetime 
