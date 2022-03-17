@@ -52,7 +52,6 @@ def todayWordle():
 def main():
     map, mean, length = createMap()
     
-    #Gets total number of results
     print("Mean value: " + str(mean))   
 
     #Rounds to nearest integer
