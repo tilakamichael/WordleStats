@@ -2,6 +2,7 @@ from tracemalloc import start
 import scraper
 import matplotlib.pyplot as plot
 from datetime import datetime 
+import time
 
 def createMap():
     #Collect tweets
@@ -52,6 +53,8 @@ def todayWordle():
 
 
 def main():
+    #start of runtime
+    startTime = time.time()    
     map, mean, length = createMap()
     
     print("Mean value: " + str(mean))   
@@ -71,6 +74,8 @@ def main():
     plot.xlabel("Average: " + str(mean))
     plot.title("Wordle guesses for " + todayWordle() + " per " + str(length) + " users")
 
+    #end of runtime
+    print("Runtime: %s seconds" % (time.time() - startTime))
     plot.show()
 
 main()
