@@ -31,6 +31,8 @@ def createMap():
             if (ord(i[i.index("/6") - 1]) >= 49 and ord(i[i.index("/6") - 1]) <= 54):
                 mean += int(i[i.index("/6") - 1])                
                 numlength = numlength + 1
+                
+            #Include unsuccessful results in the calculation as 7
             elif ((i[i.index("/6") - 1]).upper() == 'X'):
                 mean += 7
                 numlength = numlength + 1
