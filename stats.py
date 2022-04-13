@@ -1,11 +1,43 @@
 import scraper
 import matplotlib.pyplot as plot
 from datetime import datetime 
+from datetime import timedelta
 import time
 
 def createMap():
     #Collect tweets
-    list = scraper.scrapeQuery(todayWordle())
+    response = ''
+    print ("Would you like to grab a previous wordle or today's wordle? ('t' for today and 'p' for previous):")
+    response = input()
+    
+    #Making sure the user enters a valid resopnse on whether they want a prev wordle or today's wordle
+    while (response  != 'p' and response != 't'):
+        print ("Please enter 'p' or 't':")
+        response = input()
+    
+    whatWordle = todayWordle()
+    
+    date = ''
+    
+    #If they want previous wordle
+    if (response == 'p'):
+        #Grabs what wordle number they want
+        print ("Enter what wordle number you would like to grab, today's is " + todayWordle())
+        wordleNum = int(input())
+        
+        #Grabs today's wordle number
+        currWordleNum = int(whatWordle[7:])
+        
+        #Makes sure the user enters a wordle number less or equal to today's
+        while(wordleNum > currWordleNum):
+            print ("Please enter a number less than " + str(currWordleNum))
+            wordleNum = int(input())
+            
+        #Grab the date of that wordle
+        difference = currWordleNum - wordleNum
+        date = datetime.strptime(datetime.today(), "%Y-%m-%d") - timedelta(difference)
+    
+    list = scraper.scrapeQuery(whatWordle, date, date)
     mean = 0
     numlength = 0
     
@@ -49,7 +81,6 @@ def todayWordle():
     difference = datetime.strptime(today, "%Y-%m-%d") - datetime.strptime(startDate, "%Y-%m-%d")
     
     return "Wordle " + str(262 + abs(difference.days))
-
 
 def main():
     #start of runtime
